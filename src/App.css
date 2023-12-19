@@ -54,3 +54,17 @@ button{
   font-size: 30px;
   margin: 1px;
 }
+.boxContainer{
+  display: flex; 
+  
+}
+.moveContainer{
+  margin-left: 20px;
+}
+.move{
+  height: 30px; 
+  width: 100px;
+  font-weight: normal; 
+  font-size: 15px;
+  margin-bottom: 1px;
+}
