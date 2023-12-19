@@ -11,11 +11,11 @@ const winningIndexes =[[0,1,2],[3,4,5],[6,7,8], [0,3,6],[1,4,7],[2,5,8], [0,4,8]
 
 function App() {
 
-  const [moves, setMoves] = React.useState([]);
-  const [array, setArray] = React.useState(Array(9).fill(''));
-  const [history, setHistory] = React.useState(null);
-  const [xValue, setxValue] = React.useState(false);
-  const [winner, setWinner] = React.useState('');
+  const [moves, setMoves] = React.useState([]); // saving the number of moves
+  const [array, setArray] = React.useState(Array(9).fill('')); // current state
+  const [history, setHistory] = React.useState(null); // to erase the history from move .
+  const [xValue, setxValue] = React.useState(false); // checks the turn
+  const [winner, setWinner] = React.useState(''); 
 
   const count = React.useRef(0);
 
@@ -47,25 +47,8 @@ function App() {
 
   function handleClick(index){
 
-    
-
-    // if (xValue){
-    //   let newArray = [...array]; 
-    //   newArray[index] = 'O'
-    //   setArray(newArray);
-    //   setxValue(false)
-      
-    // } 
-    // else{
-    //   let newArray = [...array]; 
-    //   newArray[index] = 'X'
-    //   setArray(newArray) ;
-    //   setxValue(true)
-    // } 
-
-    
-
     if(history){
+
       let movesArray = [...moves] ;
       let slicedArray = movesArray.slice(0,history) ;
       count.current = slicedArray.length ;
@@ -95,6 +78,8 @@ function App() {
         newArray[index] = 'O'
         setArray(newArray);
         setxValue(false)
+        let newObj = { stage : newArray, roll: count.current+1}
+        setMoves([...moves, newObj]);
         
       } 
       else{
@@ -102,16 +87,17 @@ function App() {
         newArray[index] = 'X'
         setArray(newArray) ;
         setxValue(true)
+        let newObj = { stage : newArray, roll: count.current+1}
+        setMoves([...moves, newObj]);
       } 
 
       count.current++ ;
-      let newObj = { stage : array, roll: count.current}
-      setMoves([...moves, newObj]);
+      
       
     }
   }
 
-  function getSelectedObj(roll){
+  function getSelectedMove(roll){
     setHistory(roll)
     const filteredObj = moves.find(each => each.roll === roll)
     console.log(roll)
@@ -166,17 +152,16 @@ function App() {
                 </div>
               </div> 
 
-
               <div className='moveContainer'>
                 {
                   moves.map(each =>(
                     <div key={each.roll}>
-                      <button className='move' onClick={()=> getSelectedObj(each.roll)}>{`${each.roll}. Move #${each.roll}`}</button>
+                      <button className='move' onClick={()=> getSelectedMove(each.roll)}>{`${each.roll}. Move #${each.roll}`}</button>
                     </div>
                   ))
                 }
-                
               </div>
+
             </div>
             
           }
